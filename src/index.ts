@@ -7,9 +7,9 @@ dotenv.config();
 const app : Express = express();
 const SERVICE_PORT = process.env.SERVICE_PORT || 3000;
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Hello World!");
-});
+app.get("/ping", (req: Request, res: Response) => {
+    res.send("Pong!");
+})
 
 const server = app.listen(SERVICE_PORT, () => {
     const addr : AddressInfo = server.address() as AddressInfo;
