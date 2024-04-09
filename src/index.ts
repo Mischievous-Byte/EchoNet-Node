@@ -1,6 +1,8 @@
 import express, {Request, Response, Express } from "express";
 import { AddressInfo } from 'net'
+import state from "./state";
 
+console.log(state);
 const app : Express = express();
 const SERVICE_PORT = 3000;
 
