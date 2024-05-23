@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx nodemon",
+    "build": "tsc",
+    "package": "npm run build && docker build -t echonet-node .",
+    "publish": "npm run package && docker login && docker tag echonet-node roguebit02/echonet:dev && docker push roguebit02/echonet:dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
