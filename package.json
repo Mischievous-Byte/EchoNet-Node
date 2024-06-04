@@ -8,14 +8,17 @@
     "build": "tsc",
     "package": "npm run build && docker build -t echonet-node .",
     "publish": "npm run package && docker login && docker tag echonet-node roguebit02/echonet:dev && docker push roguebit02/echonet:dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.11.30",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.0",
+    "ts-jest": "^29.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
   },
