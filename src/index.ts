@@ -1,19 +1,49 @@
-/*import express, {Request, Response, Express } from "express";
+import express, {Request, Response, Express } from "express";
 import { AddressInfo } from 'net'
-import { port } from "./networking";
+import * as dgram from 'dgram';
+import { settings as network_settings, onChange } from "./networking"
+
+const port = 3000;
 
 const app : Express = express();
-
-app.get("/ping", (req: Request, res: Response) => {
-    res.send("Pong!");
-});
-
 const server = app.listen(port, () => {
     const addr : AddressInfo = server.address() as AddressInfo;
     console.log(`Listening on http://localhost:${addr.port}`);
-});*/
+});
 
-import express, {Request, Response, Express } from "express";
+app.get("/ping", (req: Request, res: Response) => {
+    res.send(network_settings.ping_message);
+});
+
+
+const udpServer : dgram.Socket = dgram.createSocket("udp4");
+
+udpServer.on('listening', () => {
+    udpServer.setBroadcast(true);
+    
+    let interval : NodeJS.Timeout | null = null;
+
+    const updateInterval = () => {
+        if(interval !== null)
+            clearInterval(interval);
+
+        interval = setInterval(() => {
+            sendDiscoveryPacket();
+        }, network_settings.discovery_interval);
+    }
+
+    updateInterval();
+
+    onChange.bind(updateInterval);
+});
+
+
+
+
+
+function sendDiscoveryPacket() {}
+
+/*import express, {Request, Response, Express } from "express";
 import { AddressInfo } from 'net'
 import * as dgram from 'dgram';;
 
@@ -93,6 +123,4 @@ app.get("/ping", (req: Request, res: Response) => {
 
 app.get("/peers", (req: Request, res: Response) => {
     res.json({peers});
-});
-
-app.get
+});*/
